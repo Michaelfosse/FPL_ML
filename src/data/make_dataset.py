@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import click
 import logging
+import pandas as pd  # Import pandas library
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
-
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
@@ -15,6 +15,13 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+    for csv_file in Path(input_filepath).glob('*.csv'):
+        logger.info(f'Reading {csv_file}')  # Log the name of the file being read
+        df = pd.read_csv(csv_file)
+        # ... your data cleaning code here ...
+        # Optionally, save the cleaned data to output_filepath
+        # output_file = Path(output_filepath) / csv_file.name
+        # df.to_csv(output_file, index=False)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
