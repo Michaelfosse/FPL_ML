@@ -1,37 +1,11 @@
-# -*- coding: utf-8 -*-
-import click
-import logging
 import pandas as pd  # Import pandas library
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+import os
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
-    """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
-    """
-    logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
+#To change wd in Jupyter notebook
+cwd = os.getcwd()
+os.chdir(cwd)
 
-    for csv_file in Path(input_filepath).glob('*.csv'):
-        logger.info(f'Reading {csv_file}')  # Log the name of the file being read
-        df = pd.read_csv(csv_file)
-        # ... your data cleaning code here ...
-        # Optionally, save the cleaned data to output_filepath
-        # output_file = Path(output_filepath) / csv_file.name
-        # df.to_csv(output_file, index=False)
-
-if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
-
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
-
-    main()
+#Load files
+all_old_fixtures = pd.read_csv("../../data/raw/all_old_fixtures.csv", sep=";")
+all_upcoming_fixtures = pd.read_csv("../../data/raw/all_upcoming_fixtures.csv")

@@ -42,3 +42,5 @@ for i in tqdm(df['id'], desc="Processing players", unit="player"):
     all_upcoming_fixtures = pd.concat([all_upcoming_fixtures, upcoming_fixtures])
     all_old_fixtures = pd.concat([all_old_fixtures, old_fixtures])
 
+all_upcoming_fixtures.to_csv("../../data/raw/all_upcoming_fixtures.csv", sep=";")
+all_old_fixtures.to_csv("../../data/raw/all_old_fixtures.csv", sep=";")
